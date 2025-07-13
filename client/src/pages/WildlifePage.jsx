@@ -10,26 +10,25 @@ export default function WildlifePage() {
   const [wildlife, setWildlife] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
 
-  function fetchWildlife() {
+  const fetchWildlife = () => {
     fetch(supabaseUrl + "/rest/v1/wildlife?select=*", {
       headers: {
         apikey: apiKey,
         Authorization: "Bearer " + apiKey,
       },
     })
-      .then(function (res) {
-        return res.json();
-      })
-      .then(function (data) {
-        setWildlife(data);
-      })
-      .catch(function (err) {
-        console.log("error fetching data", err);
-      });
-  }
+      .then((res) => res.json())
+      .then((data) => setWildlife(data))
+      .catch((err) => console.log("error fetching data", err));
+  };
 
-  useEffect(function () {
+  useEffect(() => {
     fetchWildlife();
+
+    const intervalId = setInterval(() => {
+      fetchWildlife();
+    }, 10000);
+    return () => clearInterval(intervalId);
   }, []);
 
   return (
@@ -37,18 +36,9 @@ export default function WildlifePage() {
       <div className="container">
         <h1>Wildlife Sightings</h1>
 
-        <NewPostForm
-          onPostCreated={function () {
-            fetchWildlife();
-          }}
-        />
+        <NewPostForm onPostCreated={fetchWildlife} />
 
-        <Gallery
-          wildlife={wildlife}
-          onImageClick={function (url) {
-            setSelectedImage(url);
-          }}
-        />
+        <Gallery wildlife={wildlife} onImageClick={setSelectedImage} />
       </div>
 
       {selectedImage && (

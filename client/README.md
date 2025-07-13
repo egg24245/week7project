@@ -11,3 +11,7 @@ ive implemented the functionality to navigate the page via the tab key and enlar
 you can seamlessly nav through the images via the use of tab and enter whilst focused on an enlarged image
 
 ended up making the style folder to make juggling css easier,i thought doing it all out of app.css at first would work universally but it only caused issues so i replaced app.css with a global.css ,plus style folder is cleaner.still need alot more practice to avoid typos and missing dots at start of pathing
+
+terminated "and" becoming a dependency,ive chalked this up to me likely typing "and" when installing multiple things like pg and express
+
+now to do server side things
